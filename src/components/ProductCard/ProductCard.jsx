@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import FilterContext from '../../contexts/FilterContext'
 import Button from '../Button/Button'
 import pokemonTypes from '../../data/pokemonTypes'
 import formatPrice from '../../utils/formatPrice'
@@ -10,6 +12,7 @@ function handleImageError(event) {
 
 // One product, as a Bootstrap card
 function ProductCard({ product }) {
+  const { tag: activeTag, toggleTag } = useContext(FilterContext)
   const typeStyle = pokemonTypes[product.type]
 
   return (
@@ -40,11 +43,17 @@ function ProductCard({ product }) {
         <p className="small text-secondary mb-2">{product.category}</p>
         <p className="card-text small mb-3">{product.description}</p>
 
+        {/* Clicking a tag filters the grid on this tag (same as the sidebar) */}
         {product.tags.length > 0 && (
           <ul className="list-unstyled d-flex flex-wrap gap-2 mb-3">
             {product.tags.map((tag) => (
               <li key={tag}>
-                <button type="button" className="btn btn-sm btn-light rounded-pill text-capitalize">
+                <button
+                  type="button"
+                  className={`btn btn-sm rounded-pill text-capitalize ${tag === activeTag ? 'btn-warning' : 'btn-light'}`}
+                  aria-pressed={tag === activeTag}
+                  onClick={() => toggleTag(tag)}
+                >
                   {tag}
                 </button>
               </li>

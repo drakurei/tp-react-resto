@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import FilterContext from '../contexts/FilterContext'
 import Hero from '../components/Hero/Hero'
 import Sidebar from '../components/Sidebar/Sidebar'
 import ProductGrid from '../components/ProductGrid/ProductGrid'
@@ -11,6 +12,7 @@ import IconFilter from '../components/Icons/IconFilter'
 function Home() {
   // On mobile the sidebar is hidden behind a "Filtres" button
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
+  const { activeFiltersCount } = useContext(FilterContext)
 
   const sidebarClasses = isFiltersOpen ? 'col-lg-3 d-block' : 'col-lg-3 d-none d-lg-block'
 
@@ -36,6 +38,7 @@ function Home() {
         >
           <IconFilter />
           {isFiltersOpen ? 'Masquer les filtres' : 'Afficher les filtres'}
+          {activeFiltersCount > 0 && <span className="badge bg-danger rounded-pill">{activeFiltersCount}</span>}
         </Button>
 
         <div className="row g-4">

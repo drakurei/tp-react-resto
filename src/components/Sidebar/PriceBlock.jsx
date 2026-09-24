@@ -1,8 +1,12 @@
+import { useContext } from 'react'
+import FilterContext from '../../contexts/FilterContext'
 import FilterBlock from '../FilterBlock/FilterBlock'
 import { priceRanges } from '../../data/filters'
 
 // Price ranges as radio buttons (only one range at a time)
 function PriceBlock() {
+  const { price, setPrice } = useContext(FilterContext)
+
   return (
     <FilterBlock title="Prix">
       {priceRanges.map((range) => (
@@ -12,7 +16,9 @@ function PriceBlock() {
             type="radio"
             name="price"
             className="form-check-input"
-            defaultChecked={range.id === 'all'}
+            value={range.id}
+            checked={price === range.id}
+            onChange={() => setPrice(range.id)}
           />
           <label htmlFor={`price-${range.id}`} className="form-check-label">
             {range.label}
