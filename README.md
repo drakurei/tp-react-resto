@@ -2,7 +2,7 @@
 
 ## Présentation
 
-PokéBistro est un restaurant fictif inspiré de l'univers Pokémon : des bentos, des burgers, des bowls, des desserts et des boissons qui portent chacun le nom d'un Pokémon (Pikachu Bento, Salamèche Burger, Carapuce Blue Bowl, Rondoudou Dessert…).
+PokéBistro est un restaurant fictif inspiré de l'univers Pokémon : des bentos, des burgers, des bowls, des desserts et des boissons qui portent chacun le nom d'un Pokémon (Pikachu Bento, Salamèche Bento, Carapuce Blue Bowl, Rondoudou Dessert…).
 
 Le site est une **landing page unique** : un header avec le panier, un hero, la carte du restaurant avec une sidebar de filtres, une section « À propos », un formulaire de contact et un footer. Les visiteurs peuvent chercher un plat, filtrer par catégorie / tag / prix et remplir un panier affiché dans une modal.
 
@@ -37,7 +37,7 @@ Aucune autre bibliothèque : pas de React Router (une seule page avec des ancres
 
 ## Fonctionnalités
 
-- **Affichage des produits** : 28 plats répartis en 6 catégories (Bento, Burger, Bowl, Dessert, Boisson, Menu), chacun avec son image, son type Pokémon, sa description, ses tags et son prix.
+- **Affichage des produits** : 28 plats répartis en 6 catégories (Bento, Burger, Bowl, Dessert, Boisson, Menu), chacun avec sa propre image (découpée depuis une planche créée pour le projet), son type Pokémon, sa description, ses tags et son prix.
 - **Recherche texte** sur le nom, la catégorie, les mots-clés et les tags, insensible à la casse et aux accents (`epice` trouve les plats « épicé »).
 - **Filtre par catégorie** (liste avec le nombre de plats de chaque catégorie).
 - **Filtre par tag** (populaire, épicé, végétarien, dessert, nouveau), depuis la sidebar ou depuis les tags d'une carte.
@@ -60,6 +60,8 @@ poke-bistro/
 ├── public/
 │   └── pokeball.svg               favicon, logo et image de secours
 ├── src/
+│   ├── assets/
+│   │   └── products/              les 28 images des plats (PNG 198 x 168), une par produit
 │   ├── components/
 │   │   ├── Header/Header.jsx      logo, navigation, bouton panier + compteur, burger
 │   │   ├── Nav/Nav.jsx            liens d'ancre vers les sections
@@ -81,7 +83,7 @@ poke-bistro/
 │   ├── reducers/
 │   │   └── cartReducer.js         ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_QUANTITY, DECREMENT_QUANTITY, CLEAR_CART
 │   ├── data/
-│   │   ├── products.js            les 28 produits
+│   │   ├── products.js            les 28 produits (import de leur image + description)
 │   │   ├── filters.js             catégories, tags et tranches de prix
 │   │   └── pokemonTypes.js        couleurs des types Pokémon (badge des cartes)
 │   ├── utils/
@@ -144,7 +146,17 @@ docs/maquette/maquette-resto.svg
 
 La maquette a été faite avant de coder pour découper la page en zones et en composants. Le fichier `docs/maquette/README.md` explique les zones, les choix visuels et les décisions prises (une seule page, répartition Bootstrap / Tailwind, filtres repliables sur mobile, modal pour le panier).
 
-Les visuels des plats sont les artworks officiels des Pokémon servis par [PokeAPI](https://github.com/PokeAPI/sprites) ; si une image ne charge pas, une Pokéball SVG locale prend sa place. Pokémon est une marque de Nintendo / Creatures Inc. / GAME FREAK inc. ; ce projet est un exercice, sans but commercial.
+## Images des produits
+
+Les 28 images des plats proviennent d'une **planche unique générée pour le projet** (une grille de 7 colonnes sur 4 lignes, avec le nom de chaque plat écrit sous l'assiette). La planche a été découpée en 28 fichiers PNG de 198 × 168 px (le texte de la planche a été retiré : c'est le composant `ProductCard` qui affiche le nom), rangés dans `src/assets/products/` et importés dans `src/data/products.js` comme n'importe quel asset Vite :
+
+```js
+import pikachuBento from '../assets/products/pikachu-bento.png'
+// ...
+{ id: 1, name: 'Pikachu Bento', image: pikachuBento, ... }
+```
+
+Le découpage a été fait avec un petit script Python (Pillow) gardé en dehors du projet. Les visuels du hero et de la section À propos (Pikachu, Évoli) restent les artworks officiels servis par [PokeAPI](https://github.com/PokeAPI/sprites), avec une Pokéball SVG locale en secours. Pokémon est une marque de Nintendo / Creatures Inc. / GAME FREAK inc. ; ce projet est un exercice, sans but commercial.
 
 ## Difficultés rencontrées
 
@@ -192,6 +204,24 @@ Les visuels des plats sont les artworks officiels des Pokémon servis par [PokeA
 **Cause.** Le fichier de Bootstrap commence par `@charset "UTF-8";`, une règle qui n'est valable qu'en tout début de feuille de style. Comme je l'importe à l'intérieur d'un `@layer`, l'optimiseur CSS de Vite la trouve au mauvais endroit et la signale.
 
 **Solution.** Aucune pour l'instant : ce n'est qu'un avertissement, le build réussit et le site fonctionne (le fichier est bien en UTF-8 de toute façon). Je le laisse visible plutôt que de le cacher.
+
+### Difficulté 5 : découper la planche des 28 plats sans garder le texte
+
+**Problème.** La planche fournie contient les 28 plats dans une grille de 7 × 4, avec le nom écrit sous chaque plat. Il fallait obtenir 28 images propres, sans le texte, sans couper les assiettes, avec un rendu homogène.
+
+**Cause.** Les séparations de la grille se détectent bien (ce sont les colonnes et lignes les plus claires de l'image), mais ma première détection automatique de la bande de texte se trompait sur certaines cases : les pixels sombres d'une assiette noire ou d'un pain au charbon étaient pris pour des lettres, ce qui aurait coupé le plat en deux.
+
+**Solution.** Mesurer la position des lettres uniquement sur les cases où la détection était fiable (le texte commence toujours à la ligne 173-174 de la case), fixer une coupe commune à la ligne 169, puis générer une planche de contrôle des 28 découpes et un zoom sur la bande basse de chaque image pour vérifier à l'œil qu'aucun plat n'était coupé et qu'aucune lettre ne restait.
+
+**Appris.** Un traitement automatique doit toujours être contrôlé visuellement ; sur une grille régulière, une coupe fixe vérifiée vaut mieux qu'une détection « intelligente » qui se trompe une fois sur quatre.
+
+### Difficulté 6 : l'image ne remplissait pas la carte
+
+**Problème.** Les cartes utilisaient une zone image au format 4:3 avec `object-fit: contain`. Les nouvelles images font 198 × 168 (un ratio plus carré) : il restait deux bandes sur les côtés, et comme le fond crème des images varie légèrement d'une case à l'autre de la planche, impossible de les cacher avec une couleur de fond identique.
+
+**Solution.** Donner à la zone image exactement le ratio des images grâce à la variable CSS de Bootstrap : `.ratio-product { --bs-aspect-ratio: calc(168 / 198 * 100%); }`. L'image remplit la zone sans bande ni recadrage. Cette classe est dans `globals.css`, pas dans les images : c'est le CSS qui s'adapte aux visuels, pas l'inverse.
+
+**À noter aussi.** La planche comporte deux « Salamèche Bento » et deux « Mew Berry Bowl », ainsi que deux fautes (« FRESH LCE » et « MAGIKARPE »). Pour que la carte et le panier restent lisibles, les doublons sont devenus « Salamèche Bento Maxi » et « Mew Berry Bowl Chantilly », et les noms ont été corrigés (« Fresh Ice Blue Bowl », « Magicarpe Splash Soda »). Cinq produits de la première version qui n'existaient pas sur la planche (Salamèche Burger, Ectoplasma Black Burger, Lucario Energy Bowl, Tortank Ocean Bowl, Pichu Lemonade) ont été remplacés par les plats réellement présents (Herbizarre Bento, Salamèche Bento ×2, Fresh Ice Blue Bowl, Mew Berry Bowl Chantilly) pour garder 28 produits, chacun avec sa vraie image.
 
 ## Améliorations possibles
 

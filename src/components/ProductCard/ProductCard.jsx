@@ -17,15 +17,10 @@ function ProductCard({ product }) {
 
   return (
     <article className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card">
-      <div className="position-relative bg-light">
-        <div className="ratio ratio-4x3">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="object-fit-contain p-4"
-            loading="lazy"
-            onError={handleImageError}
-          />
+      <div className="position-relative">
+        {/* The box has the same ratio as the product images (198 x 168), so nothing is cropped */}
+        <div className="ratio ratio-product">
+          <img src={product.image} alt={product.name} className="object-fit-cover" loading="lazy" onError={handleImageError} />
         </div>
         <span
           className="badge position-absolute top-0 start-0 m-3 shadow-sm"

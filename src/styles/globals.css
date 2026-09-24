@@ -131,3 +131,9 @@ h3,
 .modal-backdrop.show {
   animation: fade-in 0.2s ease-out;
 }
+
+/* Product images are 198 x 168 px: the card keeps the same ratio, so nothing is cropped or stretched */
+.ratio-product {
+  --bs-aspect-ratio: calc(168 / 198 * 100%);
+  background-color: #f7efdb;
+}

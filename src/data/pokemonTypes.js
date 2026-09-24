@@ -7,8 +7,6 @@ const pokemonTypes = {
   Plante: { background: '#78c850', color: '#1f2937' },
   Normal: { background: '#a8a878', color: '#1f2937' },
   Psy: { background: '#f85888', color: '#ffffff' },
-  Combat: { background: '#c03028', color: '#ffffff' },
-  Spectre: { background: '#705898', color: '#ffffff' },
   Fée: { background: '#ee99ac', color: '#1f2937' },
   Glace: { background: '#98d8d8', color: '#1f2937' },
 }

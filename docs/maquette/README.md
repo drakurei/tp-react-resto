@@ -32,7 +32,7 @@ Ce n'est pas une maquette graphique finale : c'est un **wireframe** (zones, text
 - **Palette** : jaune Pokéball `#ffcb05`, rouge `#e3350d`, bleu `#2a75bb`, bleu nuit `#1b2a4a`, fond crème. Le header est bleu, le hero et le contact sont sur fond jaune pâle, le footer est bleu nuit. Les couleurs des **types Pokémon** ne servent que pour le petit badge de type sur les cartes, pour ne pas tomber dans l'arc-en-ciel.
 - **Typographie** : `Fredoka` (titres, arrondie et ludique) + `Nunito` (texte), chargées via Google Fonts.
 - **Cartes arrondies** avec image en haut, prix en rouge bien visible, boutons pleins pour l'action principale (Ajouter) et contour pour l'action secondaire (Retirer).
-- **Images** : artworks officiels des Pokémon servis par PokeAPI (GitHub), avec une Pokéball SVG locale en secours si l'image ne charge pas.
+- **Images** : au moment de la maquette, les cartes utilisaient les artworks officiels des Pokémon (PokeAPI). Elles utilisent maintenant les 28 plats d'une planche générée pour le projet, découpée en 28 images (`src/assets/products/`). Le hero et la section À propos gardent les artworks PokeAPI, avec une Pokéball SVG locale en secours.
 
 ## Décisions prises avant le développement
 
