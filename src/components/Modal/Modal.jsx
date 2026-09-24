@@ -50,13 +50,13 @@ function Modal({ isOpen, onClose, title, children }) {
           onClick={(event) => event.stopPropagation()}
         >
           <div className="modal-content border-0 rounded-4 shadow-lg">
-            <div className="modal-header">
-              <h2 id="modal-title" className="modal-title h4 mb-0">
+            <div className="modal-header border-0 px-5 pt-5 pb-0">
+              <h2 id="modal-title" className="modal-title fs-3 fw-bold mb-0">
                 {title}
               </h2>
               <button ref={closeButtonRef} type="button" className="btn-close" aria-label="Fermer" onClick={onClose}></button>
             </div>
-            <div className="modal-body">{children}</div>
+            <div className="modal-body px-5 pb-5 pt-4">{children}</div>
           </div>
         </div>
       </div>

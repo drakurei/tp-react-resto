@@ -14,21 +14,23 @@ function Header({ onOpenCart }) {
   const closeMenu = () => setIsMenuOpen(false)
 
   // On desktop (lg) the nav is always visible; on mobile it depends on the state
-  const navClasses = isMenuOpen ? 'navbar-collapse d-flex order-lg-2' : 'navbar-collapse d-none d-lg-flex order-lg-2'
+  const navClasses = isMenuOpen
+    ? 'navbar-collapse d-flex order-lg-2 pt-3 pt-lg-0'
+    : 'navbar-collapse d-none d-lg-flex order-lg-2'
 
   return (
-    <header className="sticky-top shadow-sm">
-      <nav className="navbar navbar-expand-lg bg-poke-blue py-2" data-bs-theme="dark" aria-label="Navigation principale">
+    <header className="sticky-top shadow">
+      <nav className="navbar navbar-expand-lg bg-poke-blue py-3" data-bs-theme="dark" aria-label="Navigation principale">
         <div className="container-xl">
-          <a className="navbar-brand d-flex align-items-center gap-2 fs-4 fw-bold" href="#accueil">
-            <img src={pokeball} alt="" width="34" height="34" />
+          <a className="navbar-brand d-flex align-items-center gap-2 fs-3 fw-bold py-0" href="#accueil">
+            <img src={pokeball} alt="" width="40" height="40" />
             PokéBistro
           </a>
 
           <div className="d-flex align-items-center gap-2 order-lg-3">
             <Button
               variant="warning"
-              className="position-relative fw-bold d-flex align-items-center gap-2"
+              className="position-relative d-flex align-items-center gap-2 shadow-sm"
               onClick={onOpenCart}
               aria-label={`Ouvrir le panier, ${totalItems} article(s)`}
             >

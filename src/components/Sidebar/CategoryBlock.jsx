@@ -4,23 +4,21 @@ import FilterBlock from '../FilterBlock/FilterBlock'
 import { categories } from '../../data/filters'
 import products from '../../data/products'
 
-const itemClasses = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-3'
-
 // Category list. Each line shows how many products belong to the category.
 function CategoryBlock() {
   const { category, toggleCategory } = useContext(FilterContext)
 
   return (
     <FilterBlock title="Catégories">
-      <div className="list-group list-group-flush">
+      <div className="d-flex flex-column gap-1">
         <button
           type="button"
-          className={category === '' ? `${itemClasses} active` : itemClasses}
+          className={category === '' ? 'filter-option is-active' : 'filter-option'}
           aria-pressed={category === ''}
           onClick={() => toggleCategory('')}
         >
           Tous les plats
-          <span className="badge bg-light text-dark rounded-pill">{products.length}</span>
+          <span className="filter-count">{products.length}</span>
         </button>
 
         {categories.map((name) => {
@@ -31,12 +29,12 @@ function CategoryBlock() {
             <button
               key={name}
               type="button"
-              className={isActive ? `${itemClasses} active` : itemClasses}
+              className={isActive ? 'filter-option is-active' : 'filter-option'}
               aria-pressed={isActive}
               onClick={() => toggleCategory(name)}
             >
               {name}
-              <span className="badge bg-light text-dark rounded-pill">{count}</span>
+              <span className="filter-count">{count}</span>
             </button>
           )
         })}
