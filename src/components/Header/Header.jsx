@@ -3,6 +3,7 @@ import CartContext from '../../contexts/CartContext'
 import Nav from '../Nav/Nav'
 import Button from '../Button/Button'
 import IconCart from '../Icons/IconCart'
+import pokeball from '../../assets/pokeball.svg'
 
 // Sticky header: logo, navigation, cart button with counter.
 // The mobile menu (burger) is a simple useState, no Bootstrap JS needed.
@@ -20,7 +21,7 @@ function Header({ onOpenCart }) {
       <nav className="navbar navbar-expand-lg bg-poke-blue py-2" data-bs-theme="dark" aria-label="Navigation principale">
         <div className="container-xl">
           <a className="navbar-brand d-flex align-items-center gap-2 fs-4 fw-bold" href="#accueil">
-            <img src="/pokeball.svg" alt="" width="34" height="34" />
+            <img src={pokeball} alt="" width="34" height="34" />
             PokéBistro
           </a>
 

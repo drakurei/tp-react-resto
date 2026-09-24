@@ -57,10 +57,9 @@ poke-bistro/
 │   └── maquette/
 │       ├── maquette-resto.svg     wireframe desktop + mobile + modal
 │       └── README.md              explication des zones et des choix
-├── public/
-│   └── pokeball.svg               favicon, logo et image de secours
 ├── src/
 │   ├── assets/
+│   │   ├── pokeball.svg           favicon, logo et image de secours
 │   │   └── products/              les 28 images des plats (PNG 198 x 168), une par produit
 │   ├── components/
 │   │   ├── Header/Header.jsx      logo, navigation, bouton panier + compteur, burger
@@ -134,9 +133,28 @@ npm run dev
 
 Le site est disponible sur `http://localhost:5173`. Pour vérifier le build de production : `npm run build` puis `npm run preview`.
 
+## Déploiement
+
+Le site est en ligne sur GitHub Pages : **https://drakurei.github.io/tp-react-resto/**
+
+```bash
+npm run deploy
+```
+
+`predeploy` lance `vite build --base=./` (chemins relatifs, indispensables puisque le site n'est pas à la racine du domaine mais dans `/tp-react-resto/`), puis `deploy` envoie le dossier `dist` sur la branche `gh-pages` avec le package `gh-pages`. Cette branche ne contient que le site compilé, jamais le code source.
+
 ## GitHub
 
 Repository : `https://github.com/drakurei/tp-react-resto.git`
+
+### Branches
+
+- `main` : la version rendue et déployée ;
+- `develop` : la branche d'intégration, d'où partent les nouvelles fonctionnalités ;
+- `feature/<nom>` : une branche par fonctionnalité, créée depuis `develop`, fusionnée dans `develop` puis dans `main` (par exemple `feature/github-pages-deploy` pour la mise en ligne) ;
+- `gh-pages` : générée automatiquement par `npm run deploy`, ne pas y toucher à la main.
+
+Les premières étapes du TP ont été faites directement sur `main` ; les branches ont été mises en place ensuite, à partir du déploiement.
 
 ## Maquette
 
@@ -222,6 +240,16 @@ Le découpage a été fait avec un petit script Python (Pillow) gardé en dehors
 **Solution.** Donner à la zone image exactement le ratio des images grâce à la variable CSS de Bootstrap : `.ratio-product { --bs-aspect-ratio: calc(168 / 198 * 100%); }`. L'image remplit la zone sans bande ni recadrage. Cette classe est dans `globals.css`, pas dans les images : c'est le CSS qui s'adapte aux visuels, pas l'inverse.
 
 **À noter aussi.** La planche comporte deux « Salamèche Bento » et deux « Mew Berry Bowl », ainsi que deux fautes (« FRESH LCE » et « MAGIKARPE »). Pour que la carte et le panier restent lisibles, les doublons sont devenus « Salamèche Bento Maxi » et « Mew Berry Bowl Chantilly », et les noms ont été corrigés (« Fresh Ice Blue Bowl », « Magicarpe Splash Soda »). Cinq produits de la première version qui n'existaient pas sur la planche (Salamèche Burger, Ectoplasma Black Burger, Lucario Energy Bowl, Tortank Ocean Bowl, Pichu Lemonade) ont été remplacés par les plats réellement présents (Herbizarre Bento, Salamèche Bento ×2, Fresh Ice Blue Bowl, Mew Berry Bowl Chantilly) pour garder 28 produits, chacun avec sa vraie image.
+
+### Difficulté 7 : le logo disparaissait une fois le site déployé
+
+**Problème.** En préparant le déploiement sur GitHub Pages (site servi dans `/tp-react-resto/`, pas à la racine), le build en base relative gardait `src="/pokeball.svg"` tel quel dans le JavaScript du header, du footer et de l'image de secours. Une fois en ligne, ces chemins auraient pointé vers `drakurei.github.io/pokeball.svg`, qui n'existe pas.
+
+**Cause.** Vite réécrit les URL des fichiers qu'il connaît (imports et balises de `index.html`), mais pas une simple chaîne de caractères écrite dans du JSX. Le fichier était dans `public/`, donc jamais importé.
+
+**Solution.** Déplacer `pokeball.svg` dans `src/assets/` et l'importer comme les images des produits (`import pokeball from '../../assets/pokeball.svg'`, puis `src={pokeball}`). Vite génère alors la bonne URL quel que soit l'endroit où le site est hébergé, y compris pour la favicon référencée dans `index.html`.
+
+**Appris.** Tout ce qui doit suivre la « base » du site doit passer par un import Vite ; le dossier `public/` ne sert que pour les fichiers dont on écrit l'URL à la main.
 
 ## Améliorations possibles
 

@@ -1,3 +1,5 @@
+import pokeball from '../../assets/pokeball.svg'
+
 // Footer (Bootstrap grid). The copyright year is computed at render time.
 function Footer() {
   const currentYear = new Date().getFullYear()
@@ -8,7 +10,7 @@ function Footer() {
         <div className="row g-4">
           <div className="col-md-4">
             <p className="d-flex align-items-center gap-2 fs-4 fw-bold mb-2 font-display">
-              <img src="/pokeball.svg" alt="" width="28" height="28" />
+              <img src={pokeball} alt="" width="28" height="28" />
               PokéBistro
             </p>
             <p className="text-white-50 small mb-0">
