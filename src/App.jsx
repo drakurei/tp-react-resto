@@ -1,10 +1,16 @@
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import Home from './pages/Home'
+
 function App() {
   return (
-    <main className="container py-5">
-      {/* Temporary check: a Bootstrap class (text-center) and a Tailwind class (text-poke-red) */}
-      <h1 className="text-center text-poke-red">PokéBistro</h1>
-      <p className="text-center mb-0">Le restaurant inspiré de l'univers Pokémon.</p>
-    </main>
+    <div className="d-flex flex-column min-vh-100">
+      <Header cartCount={0} onOpenCart={() => {}} />
+      <main className="flex-grow-1">
+        <Home />
+      </main>
+      <Footer />
+    </div>
   )
 }
 

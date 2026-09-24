@@ -50,3 +50,21 @@ h3,
 .navbar-brand {
   font-family: var(--font-display);
 }
+
+/* Product cards: small lift on hover */
+.product-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.75rem 1.5rem rgba(27, 42, 74, 0.15);
+}
+
+/* Category list: brand colors for the active line */
+.list-group-item.active {
+  --bs-list-group-active-bg: #2a75bb;
+  --bs-list-group-active-border-color: #2a75bb;
+}
