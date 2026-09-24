@@ -1,19 +1,19 @@
 import { useContext } from 'react'
 import FilterContext from '../../contexts/FilterContext'
+import CartContext from '../../contexts/CartContext'
 import Button from '../Button/Button'
 import pokemonTypes from '../../data/pokemonTypes'
 import formatPrice from '../../utils/formatPrice'
-
-// Fallback when the remote image does not load
-function handleImageError(event) {
-  event.currentTarget.onerror = null
-  event.currentTarget.src = '/pokeball.svg'
-}
+import { handleImageError } from '../../utils/imageFallback'
 
 // One product, as a Bootstrap card
 function ProductCard({ product }) {
   const { tag: activeTag, toggleTag } = useContext(FilterContext)
+  const { addToCart, decrementQuantity, getQuantity } = useContext(CartContext)
+
   const typeStyle = pokemonTypes[product.type]
+  // How many times this product is already in the cart (0 = not in the cart)
+  const quantity = getQuantity(product.id)
 
   return (
     <article className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card">
@@ -33,6 +33,11 @@ function ProductCard({ product }) {
         >
           {product.type}
         </span>
+        {quantity > 0 && (
+          <span key={quantity} className="badge position-absolute top-0 end-0 m-3 bg-warning text-dark shadow-sm badge-pop">
+            {quantity} dans le panier
+          </span>
+        )}
       </div>
 
       <div className="card-body d-flex flex-column">
@@ -62,11 +67,17 @@ function ProductCard({ product }) {
         )}
 
         <div className="mt-auto d-flex gap-2">
-          <Button variant="primary" className="flex-grow-1 fw-semibold">
+          <Button variant="primary" className="flex-grow-1 fw-semibold" onClick={() => addToCart(product)}>
             + Ajouter
           </Button>
-          <Button variant="outline-danger" aria-label={`Retirer ${product.name} du panier`} disabled>
-            Retirer
+          {/* Removes one unit; the line disappears when the last unit is removed */}
+          <Button
+            variant="outline-danger"
+            onClick={() => decrementQuantity(product.id)}
+            disabled={quantity === 0}
+            aria-label={`Retirer ${product.name} du panier`}
+          >
+            − Retirer
           </Button>
         </div>
       </div>

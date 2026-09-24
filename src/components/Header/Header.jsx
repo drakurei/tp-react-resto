@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import CartContext from '../../contexts/CartContext'
 import Nav from '../Nav/Nav'
 import Button from '../Button/Button'
 import IconCart from '../Icons/IconCart'
 
 // Sticky header: logo, navigation, cart button with counter.
 // The mobile menu (burger) is a simple useState, no Bootstrap JS needed.
-function Header({ cartCount, onOpenCart }) {
+function Header({ onOpenCart }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { totalItems } = useContext(CartContext)
 
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -27,12 +29,16 @@ function Header({ cartCount, onOpenCart }) {
               variant="warning"
               className="position-relative fw-bold d-flex align-items-center gap-2"
               onClick={onOpenCart}
-              aria-label={`Ouvrir le panier, ${cartCount} article(s)`}
+              aria-label={`Ouvrir le panier, ${totalItems} article(s)`}
             >
               <IconCart />
               <span className="d-none d-sm-inline">Panier</span>
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {cartCount}
+              {/* key={totalItems}: the badge is re-created at each change, which replays the "pop" animation */}
+              <span
+                key={totalItems}
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badge-pop"
+              >
+                {totalItems}
               </span>
             </Button>
 

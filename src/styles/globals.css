@@ -68,3 +68,66 @@ h3,
   --bs-list-group-active-bg: #2a75bb;
   --bs-list-group-active-border-color: #2a75bb;
 }
+
+/* Feedback when the cart changes: the counter "pops" */
+@keyframes pop {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.badge-pop {
+  animation: pop 0.3s ease;
+}
+
+/* Product card badge: no translate-middle, so a simpler pop */
+.product-card .badge-pop {
+  animation-name: pop-card;
+}
+
+@keyframes pop-card {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Soft opening of the modal */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.modal.d-block .modal-dialog {
+  animation: modal-in 0.25s ease-out;
+}
+
+.modal-backdrop.show {
+  animation: fade-in 0.2s ease-out;
+}

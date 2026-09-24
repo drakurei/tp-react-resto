@@ -1,3 +1,5 @@
+import { handleImageError } from '../../utils/imageFallback'
+
 // "À propos" section, styled with Tailwind
 const aboutImage = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png'
 
@@ -43,10 +45,7 @@ function About() {
               width="475"
               height="475"
               loading="lazy"
-              onError={(event) => {
-                event.currentTarget.onerror = null
-                event.currentTarget.src = '/pokeball.svg'
-              }}
+              onError={handleImageError}
             />
           </div>
           <p className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-full bg-poke-yellow px-5 py-2 text-sm font-bold text-poke-navy shadow-lg">

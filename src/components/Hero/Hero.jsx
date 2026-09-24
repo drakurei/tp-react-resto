@@ -1,3 +1,5 @@
+import { handleImageError } from '../../utils/imageFallback'
+
 // Hero section, styled with Tailwind
 const heroImage = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'
 
@@ -51,10 +53,7 @@ function Hero() {
             className="relative w-4/5 drop-shadow-2xl transition hover:scale-105"
             width="475"
             height="475"
-            onError={(event) => {
-              event.currentTarget.onerror = null
-              event.currentTarget.src = '/pokeball.svg'
-            }}
+            onError={handleImageError}
           />
           <span className="absolute -right-2 top-8 rounded-2xl bg-white px-4 py-2 text-sm font-bold text-poke-navy shadow-lg">
             Nouveau : Mewtwo Deluxe Menu
