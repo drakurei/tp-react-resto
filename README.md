@@ -43,11 +43,12 @@ Aucune autre bibliothèque : pas de React Router (une seule page avec des ancres
 - **Filtre par tag** (populaire, épicé, végétarien, dessert, nouveau), depuis la sidebar ou depuis les tags d'une carte.
 - **Filtre par prix** : moins de 10 €, 10 € à 15 €, 15 € à 20 €, plus de 20 €.
 - Les filtres se **combinent**, un compteur indique le nombre de résultats, un message propre s'affiche quand rien ne correspond, et un bouton **« Réinitialiser les filtres »** remet tout à zéro.
-- **Panier** : ajout, retrait d'une unité depuis la carte, + / − et suppression d'une ligne dans la modal, vider le panier, nombre total d'articles dans le header, prix total recalculé automatiquement.
-- **Modal du panier** : ouverture depuis le header, fermeture avec la croix, la touche Échap ou un clic à côté, état vide, sous-total par ligne et total général.
+- **Panier** : ajout avec un retour visuel immédiat sur le bouton (« Ajouté au panier ») et une ligne « 2 dans le panier » sur la carte, retrait d'une unité depuis la carte, + / − et suppression d'une ligne dans la modal, vider le panier, nombre total d'articles dans le header, prix total recalculé automatiquement.
+- **Modal du panier** : ouverture depuis le header, fermeture avec la croix, la touche Échap ou un clic à côté, état vide, sous-total par ligne, total général, et un bouton « Commander » qui affiche simplement un message (il n'y a pas de vrai système de commande).
 - **Context** pour les filtres et pour le panier, **Reducer** pour la logique du panier.
 - **Responsive** : menu burger, bouton « Afficher les filtres » qui déplie la sidebar sur mobile et tablette, grille sur 1 / 2 / 3 colonnes.
-- Petits plus : année du copyright dynamique, images de secours si une image ne charge pas, animations légères (survol des cartes, compteur du panier, ouverture de la modal), attributs `aria` et labels sur les contrôles.
+- Petits plus : année du copyright dynamique, images de secours si une image ne charge pas, animations légères (survol des cartes et des images, compteur du panier, apparition des cartes, ouverture de la modal), attributs `aria`, labels et focus visible sur les contrôles.
+- **Interface** : sidebar de filtres dans un panneau blanc avec un compteur de filtres actifs, chips de tags communes à la sidebar et aux cartes, boutons Bootstrap recolorés aux couleurs de la marque (bleu, jaune) et en forme de pilule, sections À propos et Contact retravaillées (promesses, cartes d'informations avec icônes).
 
 ## Architecture
 
@@ -75,7 +76,7 @@ poke-bistro/
 │   │   ├── CartItem/              une ligne du panier (− quantité +, sous-total, supprimer)
 │   │   ├── About/, Contact/       sections À propos et Contact
 │   │   ├── Footer/                liens, infos fictives, copyright dynamique
-│   │   └── Icons/                 icônes SVG (panier, loupe, corbeille, filtre, smiley)
+│   │   └── Icons/                 icônes SVG (panier, loupe, corbeille, filtre, smiley, coche, adresse, téléphone, horloge)
 │   ├── contexts/
 │   │   ├── FilterContext.jsx      état des filtres (search, category, tag, price)
 │   │   └── CartContext.jsx        état du panier (useReducer) + totaux
@@ -92,7 +93,7 @@ poke-bistro/
 │   ├── pages/
 │   │   └── Home.jsx               assemble Hero, Sidebar + ProductGrid, About, Contact
 │   ├── styles/
-│   │   └── globals.css            Bootstrap + Tailwind + thème (couleurs, polices, animations)
+│   │   └── globals.css            Bootstrap + Tailwind + thème (couleurs, boutons, chips, options de filtre, animations)
 │   ├── App.jsx                    providers, header, page, footer, modal du panier
 │   └── main.jsx
 ├── index.html

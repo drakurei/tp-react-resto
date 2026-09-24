@@ -9,22 +9,28 @@ function PriceBlock() {
 
   return (
     <FilterBlock title="Prix">
-      {priceRanges.map((range) => (
-        <div key={range.id} className="form-check mb-2">
-          <input
-            id={`price-${range.id}`}
-            type="radio"
-            name="price"
-            className="form-check-input"
-            value={range.id}
-            checked={price === range.id}
-            onChange={() => setPrice(range.id)}
-          />
-          <label htmlFor={`price-${range.id}`} className="form-check-label">
-            {range.label}
-          </label>
-        </div>
-      ))}
+      <div className="d-flex flex-column gap-2">
+        {priceRanges.map((range) => {
+          const isChecked = price === range.id
+
+          return (
+            <div key={range.id} className="form-check d-flex align-items-center gap-2 m-0 ps-0">
+              <input
+                id={`price-${range.id}`}
+                type="radio"
+                name="price"
+                className="form-check-input m-0 flex-shrink-0"
+                value={range.id}
+                checked={isChecked}
+                onChange={() => setPrice(range.id)}
+              />
+              <label htmlFor={`price-${range.id}`} className={isChecked ? 'form-check-label fw-bold' : 'form-check-label'}>
+                {range.label}
+              </label>
+            </div>
+          )
+        })}
+      </div>
     </FilterBlock>
   )
 }

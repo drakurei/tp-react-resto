@@ -12,13 +12,12 @@ function TagBlock() {
       <div className="d-flex flex-wrap gap-2">
         {tags.map((name) => {
           const isActive = tag === name
-          const buttonClasses = isActive ? 'btn btn-sm btn-warning' : 'btn btn-sm btn-outline-secondary'
 
           return (
             <button
               key={name}
               type="button"
-              className={`${buttonClasses} rounded-pill text-capitalize fw-semibold`}
+              className={isActive ? 'chip is-active' : 'chip'}
               aria-pressed={isActive}
               onClick={() => toggleTag(name)}
             >
