@@ -41,7 +41,7 @@ function About() {
             <img
               src={aboutImage}
               alt="Évoli, l'ambassadeur des desserts du PokéBistro"
-              className="mx-auto w-3/4 drop-shadow-2xl"
+              className="mx-auto h-auto w-3/4 drop-shadow-2xl"
               width="475"
               height="475"
               loading="lazy"

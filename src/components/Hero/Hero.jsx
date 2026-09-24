@@ -50,7 +50,7 @@ function Hero() {
           <img
             src={heroImage}
             alt="Pikachu, la mascotte du PokéBistro"
-            className="relative w-4/5 drop-shadow-2xl transition hover:scale-105"
+            className="relative h-auto w-4/5 drop-shadow-2xl transition hover:scale-105"
             width="475"
             height="475"
             onError={handleImageError}
