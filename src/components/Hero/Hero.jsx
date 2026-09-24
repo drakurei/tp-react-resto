@@ -15,7 +15,7 @@ function Hero() {
           <h1 className="mb-4 font-display text-4xl font-bold leading-tight text-poke-navy md:text-5xl lg:text-6xl">
             Attrapez-les tous…
             <br />
-            <span className="text-poke-red">dans votre assiette !</span>
+            <span className="text-poke-red">dans votre assiette&nbsp;!</span>
           </h1>
           <p className="mx-auto mb-8 max-w-xl text-lg text-slate-700 lg:mx-0">
             Bentos, burgers, bowls et desserts inspirés de vos Pokémon préférés. Des recettes fraîches, colorées
